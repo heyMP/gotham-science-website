@@ -3454,6 +3454,7 @@ class GothamLogo extends HTMLElement {
     return `
 <style>:host {
   display: block;
+  font-style: italic;
 }
 
 :host([hidden]) {
@@ -3611,57 +3612,54 @@ class GothamScienceHeader extends _litElement.LitElement {
   // render function
   render() {
     return _litElement.html`
-      <style>
-        :host {
-          display: block;
-        }
+<style>:host {
+  display: block;
+}
 
-        :host([hidden]) {
-          display: none;
-        }
+:host([hidden]) {
+  display: none;
+}
 
-        .header {
-          display: flex;
-          width: auto;
-          justify-content: center;
-          background: purple;
-          padding: 1em;
-          color: white;
-        }
+.header {
+  display: flex;
+  width: auto;
+  justify-content: center;
+  background: purple;
+  padding: 1em;
+  color: burlywood;
+}
 
-        .logo {
-          font-size: 1.8em;
-        }
+.logo {
+  font-size: 1.8em;
+}
 
-        .left-section {
-          flex: 1 1 auto;
-        }
-      </style>
-      <div class="header">
-        <div class="left-section">
-          <div class="logo">
-            <gotham-logo></gotham-logo>
-          </div>
-          <div class="subtitle">
-            ${this.subtitle}
-          </div>
-        </div>
-        <div class="right-section">
-          <slot></slot>
-        </div>
-      </div>
-    `;
+.left-section {
+  flex: 1 1 auto;
+}</style>
+<div class="header">
+  <div class="left-section">
+    <div class="logo">
+      <gotham-logo></gotham-logo>
+    </div>
+    <div class="subtitle">
+      ${this.subtitle}
+    </div>
+  </div>
+  <div class="right-section">
+    <slot></slot>
+  </div>
+</div>`;
   } // properties available to the custom element for data binding
 
 
   static get properties() {
     return {
-      subtitle: {
-        name: "subtitle",
-        type: "String",
-        value: "",
-        reflectToAttribute: false,
-        observer: false
+      "subtitle": {
+        "name": "subtitle",
+        "type": "String",
+        "value": "",
+        "reflectToAttribute": false,
+        "observer": false
       }
     };
   }
@@ -3697,11 +3695,195 @@ class GothamScienceHeader extends _litElement.LitElement {
 
 exports.GothamScienceHeader = GothamScienceHeader;
 customElements.define("gotham-science-header", GothamScienceHeader);
-},{"@polymer/lit-element":"../node_modules/@polymer/lit-element/lit-element.js","@gotham/gotham-logo/gotham-logo.js":"../node_modules/@gotham/gotham-logo/gotham-logo.js"}],"app.js":[function(require,module,exports) {
+},{"@polymer/lit-element":"../node_modules/@polymer/lit-element/lit-element.js","@gotham/gotham-logo/gotham-logo.js":"../node_modules/@gotham/gotham-logo/gotham-logo.js"}],"../node_modules/@gotham/gotham-footer/gotham-footer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GothamFooter = void 0;
+
+require("@gotham/gotham-logo/gotham-logo.js");
+
+/**
+ * Copyright 2019 Gotham University
+ * @license Apache-2.0, see License.md for full text.
+ */
+
+/**
+ * `gotham-footer`
+ * ``
+ *
+ * @microcopy - language worth noting:
+ *  -
+ *
+ * @customElement
+ * @demo demo/index.html
+ */
+class GothamFooter extends HTMLElement {
+  // render function
+  get html() {
+    return `
+<style>:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.container {
+  display: flex;
+  width: auto;
+  background-color: purple;
+  color: burlywood;
+  padding: 1em;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8em;
+  flex: 1 1 auto;
+}</style>
+<div class="container">
+  <div class="logo">
+    <gotham-logo></gotham-logo>
+  </div>
+  <div class="slot">
+    <slot></slot>
+  </div>
+</div>`;
+  } // properties available to the custom element for data binding
+
+
+  static get properties() {
+    return {
+      subtitle: {
+        name: "subtitle",
+        type: "String",
+        value: "",
+        reflectToAttribute: false,
+        observer: false
+      }
+    };
+  }
+  /**
+   * Store the tag name to make it easier to obtain directly.
+   * @notice function name must be here for tooling to operate correctly
+   */
+
+
+  static get tag() {
+    return "gotham-footer";
+  }
+  /**
+   * life cycle
+   */
+
+
+  constructor(delayRender = false) {
+    super(); // set tag for later use
+
+    this.tag = GothamFooter.tag; // map our imported properties json to real props on the element
+    // @notice static getter of properties is built via tooling
+    // to edit modify src/GothamFooter-properties.json
+
+    let obj = GothamFooter.properties;
+
+    for (let p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (this.hasAttribute(p)) {
+          this[p] = this.getAttribute(p);
+        } else {
+          this.setAttribute(p, obj[p].value);
+          this[p] = obj[p].value;
+        }
+      }
+    } // optional queue for future use
+
+
+    this._queue = [];
+    this.template = document.createElement("template");
+    this.attachShadow({
+      mode: "open"
+    });
+
+    if (!delayRender) {
+      this.render();
+    }
+  }
+  /**
+   * life cycle, element is afixed to the DOM
+   */
+
+
+  connectedCallback() {
+    if (window.ShadyCSS) {
+      window.ShadyCSS.styleElement(this);
+    }
+
+    if (this._queue.length) {
+      this._processQueue();
+    }
+  }
+
+  _copyAttribute(name, to) {
+    const recipients = this.shadowRoot.querySelectorAll(to);
+    const value = this.getAttribute(name);
+    const fname = value == null ? "removeAttribute" : "setAttribute";
+
+    for (const node of recipients) {
+      node[fname](name, value);
+    }
+  }
+
+  _queueAction(action) {
+    this._queue.push(action);
+  }
+
+  _processQueue() {
+    this._queue.forEach(action => {
+      this[`_${action.type}`](action.data);
+    });
+
+    this._queue = [];
+  }
+
+  _setProperty({
+    name,
+    value
+  }) {
+    this[name] = value;
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = null;
+    this.template.innerHTML = this.html;
+
+    if (window.ShadyCSS) {
+      window.ShadyCSS.prepareTemplate(this.template, this.tag);
+    }
+
+    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+  } //static get observedAttributes() {
+  //  return [];
+  //}
+  // disconnectedCallback() {}
+  // attributeChangedCallback(attr, oldValue, newValue) {}
+
+
+}
+
+exports.GothamFooter = GothamFooter;
+window.customElements.define(GothamFooter.tag, GothamFooter);
+},{"@gotham/gotham-logo/gotham-logo.js":"../node_modules/@gotham/gotham-logo/gotham-logo.js"}],"app.js":[function(require,module,exports) {
 "use strict";
 
 require("@gotham/gotham-science-header/gotham-science-header.js");
-},{"@gotham/gotham-science-header/gotham-science-header.js":"../node_modules/@gotham/gotham-science-header/gotham-science-header.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+require("@gotham/gotham-footer/gotham-footer.js");
+},{"@gotham/gotham-science-header/gotham-science-header.js":"../node_modules/@gotham/gotham-science-header/gotham-science-header.js","@gotham/gotham-footer/gotham-footer.js":"../node_modules/@gotham/gotham-footer/gotham-footer.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3728,7 +3910,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54465" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55594" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

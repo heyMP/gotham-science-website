@@ -6,9 +6,32 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Gotham Science Website</title>
   <script src="app.js" type="module"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      flex: 1 1 auto;
+    }
+  </style>
 </head>
 <body>
-  <gotham-science-header></gotham-science-header>
-  <h1>Welcome to Gotham Science University!</h1>
+  <gotham-science-header subtitle="College of Science">
+    <div class="search">
+      <label>Search:</label>
+      <input type="text">
+    </div>
+  </gotham-science-header>
+
+  <main>
+    <h1>Welcome to Gotham Science University!</h1>
+  </main>
+
+
+  <gotham-footer></gotham-footer>
 </body>
 </html>
