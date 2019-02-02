@@ -1,0 +1,48 @@
+Arguments: 
+  /Users/michael/.nvm/versions/node/v8.12.0/bin/node /Users/michael/.yarn/bin/yarn.js
+
+PATH: 
+  /Users/michael/.yarn/bin:/Users/michael/.yarn/bin:/Users/michael/.config/yarn/global/node_modules/.bin:/Users/michael/.yarn/bin:/Users/michael/.config/yarn/global/node_modules/.bin:/Users/michael/.nvm/versions/node/v8.12.0/bin:/Users/michael/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.10.1
+
+Node version: 
+  8.12.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, scandir '/Users/michael/github/dcnj-2019-wcf/apps/gotham-science-website/factories/gotham-main/elements/gotham-logo/node_modules/@babel'
+
+npm manifest: 
+  {
+    "name": "@gotham/gotham-science-website",
+    "version": "0.0.2",
+    "description": "",
+    "main": "gotham-science-website.js",
+    "scripts": {
+      "start": "parcel serve"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "publishConfig": {
+      "access": "false"
+    },
+    "dependencies": {
+      "@gotham/gotham-footer": "^0.0.6",
+      "@gotham/gotham-science-header": "^0.0.3"
+    },
+    "private": true,
+    "workspaces": [
+      "./factories/*/elements/*"
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

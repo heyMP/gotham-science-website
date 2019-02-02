@@ -1,0 +1,26 @@
+{
+  "name": "@gotham/gotham-science-website",
+  "version": "0.0.2",
+  "description": "",
+  "main": "gotham-science-website.js",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "false"
+  },
+  "dependencies": {
+    "@gotham/gotham-footer": "^0.0.6",
+    "@gotham/gotham-science-header": "^0.0.3"
+  },
+  "private": true,
+  "workspaces": [
+    "./factories/*/elements/*"
+  ],
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0"
+  }
+}
